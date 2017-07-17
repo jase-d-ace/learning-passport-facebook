@@ -113,9 +113,7 @@ passport.use('facebook-login', new facebookStrat({
   callbackURL: 'http://localhost:3000/auth/facebook/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, callback) =>{
-  console.log('in callback', req.user);
   person.update(accessToken, profile.displayName, profile.id, req.user.id).then((user) =>{
-    console.log('user updated: ', user)
     return callback(null, user)
   }).catch((error) =>{
     console.log('facebook error: ', error);
@@ -130,9 +128,8 @@ passport.use('facebook', new facebookStrat({
   callbackURL: 'http://localhost:3000/connect/facebook/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, callback) =>{
-  console.log('in callback', req.user);
+  console.log('in callback: ', profile._json.friends.data)
   person.update(accessToken, profile.displayName, profile.id, req.user.id).then((user) =>{
-    console.log('user updated: ', user)
     return callback(null, user)
   }).catch((error) =>{
     console.log('facebook error: ', error);
